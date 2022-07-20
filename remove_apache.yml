@@ -8,13 +8,13 @@
     yum: 
       update_cache: yes
 
-  - name: install apache2 package
+  - name: Remove apache2 package
     yum:
       name: httpd
       state: absent 
 
 
-  - name: add php support for apcahe
+  - name: Remove php support for apcahe
     yum:
       name: php
       state: absent

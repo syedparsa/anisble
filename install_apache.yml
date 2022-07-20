@@ -4,17 +4,15 @@
   become: true
   tasks:
 
-  - name: update Repos index
-    yum: 
-      update_cache: yes
+ 
 
-  - name: install apache2 package
+  - name: install apache, Php and update cache package!!!
     yum:
-      name: httpd
+      name:
+       - httpd
+       - php
       state: latest 
+      update_cache: yes
+    when: ansible_distribution == "CentOS"  
 
-
-  - name: add php support for apcahe
-    yum:
-      name: php
-      state: latest
+ 

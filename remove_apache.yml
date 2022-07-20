@@ -8,6 +8,10 @@
     yum: 
       update_cache: yes
 
+
+- hosts: web_server
+  become: true
+  tasks:
   - name: Remove apache2 package
     yum:
       name: httpd
@@ -17,4 +21,5 @@
   - name: Remove php support for apcahe
     yum:
       name: php
+        
       state: absent

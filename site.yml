@@ -28,10 +28,35 @@
        - httpd
        - php
       state: latest 
-    when: ansible_distribution == "CentOS"  
+    when: ansible_distribution == "CentOS"
+  
+  - name: start httpd and php
+    tags: apache,centos,httpd
+    service:
+      name: httpd 
+      state: started
+      enabled: yes  
+    when: ansible_distribution == "CentOS"   
 
- 
 
+  - name: change Email for the Admin
+    tags: Email,admin,change,centos
+    lineinfile: 
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmi someone@somewhere.net
+    when: ansible_distribution == "CentOS"
+    register: var1
+
+
+
+  - name: Restart httpd service
+    tags: restart
+    service:
+      name: httpd 
+      state: restarted
+    when: var1.changed
+     
 
 - hosts: db_server
   become: true
@@ -45,3 +70,20 @@
       name: mariadb-server
       state: latest
     when: ansible_distribution == "CentOS"
+
+
+- hosts: workstation
+  become: true
+  tasks: 
+   
+
+
+  - name: install unzip
+    tags: unzip
+    yum: 
+      name: unzip
+      state: latest
+
+
+    
+     

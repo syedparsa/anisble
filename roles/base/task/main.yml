@@ -1,0 +1,6 @@
+- name: Create Shh Key for Simon
+    tags: sshkey,simon
+    authorized_key:
+      user: simon
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKQxx3Wz/BtA0AeAHdvg41gsHzvdDhMEtEEahuFHRlED Ansible"
+       

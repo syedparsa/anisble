@@ -17,86 +17,33 @@
 
 -  hosts: all
    become: true
-   tasks: 
-   
-   - name: Create Shh Key for Simon
-     tags: sshkey,simon
-     authorized_key:
-       user: simon
-       key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKQxx3Wz/BtA0AeAHdvg41gsHzvdDhMEtEEahuFHRlED Ansible"
-       
-
-
+   roles: 
+     - base
+             
 
 
 - hosts: web_server
   become: true
-  tasks: 
- 
+  roles: 
+    - web_server
 
-  - name: install apache, Php and update cache package!!!
-
-    tags: apache, httpd, centos
-    yum:
-      name:
-       - httpd
-       - php
-      state: latest 
-    when: ansible_distribution == "CentOS"
-  
-  - name: start httpd and php
-    tags: apache,centos,httpd
-    service:
-      name: httpd 
-      state: started
-      enabled: yes  
-    when: ansible_distribution == "CentOS"   
-
-
-#  - name: change Email for the Admin
-#    tags: Email,admin,change,centos
-#    lineinfile: 
-#      path: /etc/httpd/conf/httpd.conf
-#      regexp: '^ServerAdmin'
-#      line: ServerAdmi someone@somewhere.net
-#    when: ansible_distribution == "CentOS"
-#    register: var1
-#
-#
-#
-#  - name: Restart httpd service
-#    tags: restart
-#    service:
-#      name: httpd 
-#      state: restarted
-#    when: var1.changed
      
 
 - hosts: db_server
   become: true
-  tasks: 
+  roles: 
+    - db_server
 
 
-
-  - name: install maria db package (CentOS)
-    tags: mariadb,db,centos
-    yum: 
-      name: mariadb-server
-      state: latest
-    when: ansible_distribution == "CentOS"
 
 
 - hosts: workstation
   become: true
-  tasks: 
+  roles:
+    - workstation 
    
 
 
-  - name: install unzip
-    tags: unzip
-    yum: 
-      name: unzip
-      state: latest
 
 
     

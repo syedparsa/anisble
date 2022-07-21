@@ -1,5 +1,6 @@
 - name: install unzip
     tags: unzip
     yum: 
-      name: unzip
+      name: "{{unzip_package_name }}"
+
       state: latest

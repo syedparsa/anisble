@@ -5,12 +5,26 @@
   tasks:
 
 
-  - name : install updates (CentOS)
+  - name : cache  updates (CentOS)
     tags: always
     yum:
-      update_only: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "CentOS"
+
+
+
+
+-  hosts: all
+   become: true
+   tasks: 
+   
+   - name: Create Shh Key for Simon
+     tags: sshkey,simon
+     authorized_key:
+       user: simon
+       key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKQxx3Wz/BtA0AeAHdvg41gsHzvdDhMEtEEahuFHRlED Ansible"
+       
 
 
 
@@ -39,23 +53,23 @@
     when: ansible_distribution == "CentOS"   
 
 
-  - name: change Email for the Admin
-    tags: Email,admin,change,centos
-    lineinfile: 
-      path: /etc/httpd/conf/httpd.conf
-      regexp: '^ServerAdmin'
-      line: ServerAdmi someone@somewhere.net
-    when: ansible_distribution == "CentOS"
-    register: var1
-
-
-
-  - name: Restart httpd service
-    tags: restart
-    service:
-      name: httpd 
-      state: restarted
-    when: var1.changed
+#  - name: change Email for the Admin
+#    tags: Email,admin,change,centos
+#    lineinfile: 
+#      path: /etc/httpd/conf/httpd.conf
+#      regexp: '^ServerAdmin'
+#      line: ServerAdmi someone@somewhere.net
+#    when: ansible_distribution == "CentOS"
+#    register: var1
+#
+#
+#
+#  - name: Restart httpd service
+#    tags: restart
+#    service:
+#      name: httpd 
+#      state: restarted
+#    when: var1.changed
      
 
 - hosts: db_server

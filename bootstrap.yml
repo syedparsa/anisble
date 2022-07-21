@@ -1,0 +1,40 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+
+  - name : install updates (CentOS)
+    tags: always
+    yum:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+
+
+
+-  hosts: all
+   become: true
+   tasks: 
+   
+   - name: Create new User simon
+     tags: new user,user,simon
+     user: 
+       name: simon
+       groups: root
+   - name: Create Shh Key for Simon
+     tags: sshkey,simon
+     authorized_key:
+       user: simon
+       key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKQxx3Wz/BtA0AeAHdvg41gsHzvdDhMEtEEahuFHRlED Ansible"
+       
+   - name: Add Sudoer File for simon
+     tags: sudoer,copyfile
+     copy: 
+       src: sudoer_simon
+       dest: /etc/sudoers.d/simon
+       group: root
+       owner: root
+       mode: 0440
